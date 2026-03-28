@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{COMPANY_NAME}} — Transform Your Photos into AI Dog Portraits</title>
-  <meta name="description" content="Upload a selfie, pick your breed & art style, and get 4–6 stunning AI dog portraits in minutes. 50+ breeds, 20+ art styles. Perfect for gifts, social media & merch." />
+  <title>{{COMPANY_NAME}} — Transform Any Photo Into a Stunning AI Dog Portrait</title>
+  <meta name="description" content="Upload a selfie, pick from 50+ breeds & 20+ art styles — get 4–6 stunning AI dog portraits in minutes. Renaissance paintings, watercolor, anime & more." />
   <meta property="og:title" content="{{COMPANY_NAME}} — Turn Any Photo Into a Dog Portrait" />
   <meta property="og:description" content="AI-powered dog portraits in 50+ breeds & 20+ art styles. Upload a photo, get 4–6 stunning illustrations in minutes." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://{{COMPANY_DOMAIN}}/" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&q=80" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{COMPANY_NAME}} — AI Dog Portraits" />
   <meta name="twitter:description" content="Upload a selfie. Pick a breed. Get stunning dog portraits instantly." />
@@ -17,25 +18,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "SoftwareApplication",
     "name": "{{COMPANY_NAME}}",
     "description": "{{COMPANY_VISION}}",
     "url": "https://{{COMPANY_DOMAIN}}/",
-    "logo": "{{COMPANY_LOGO}}",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "{{COMPANY_EMAIL}}",
-      "contactType": "customer support"
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/PreOrder"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{COMPANY_NAME}}",
+      "logo": "{{COMPANY_LOGO}}",
+      "email": "{{COMPANY_EMAIL}}"
     }
   }
   </script>
 
   <style>
-    /* ── CSS Variables ─────────────────────────────────────── */
+    /* ─── CSS Custom Properties ─────────────────────────────── */
     :root {
       --primary:        #2563EB;
       --primary-dark:   #1D4ED8;
@@ -60,7 +66,7 @@
       --ease-snappy:    cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    /* ── Reset & Base ──────────────────────────────────────── */
+    /* ─── Reset & Base ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
@@ -76,21 +82,31 @@
     img { max-width: 100%; display: block; }
     button { cursor: pointer; border: none; background: none; }
 
-    /* ── Hero Animations ───────────────────────────────────── */
+    /* ─── Hero Entrance Animations ───────────────────────────── */
     @keyframes heroFadeUp {
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hero-animate {
-      animation: heroFadeUp 0.8s var(--ease-smooth) both;
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
     }
-    .stagger-1 { animation-delay: 0.12s; }
-    .stagger-2 { animation-delay: 0.24s; }
-    .stagger-3 { animation-delay: 0.36s; }
-    .stagger-4 { animation-delay: 0.50s; }
-    .stagger-5 { animation-delay: 0.64s; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .hero-animate { animation: heroFadeUp 0.8s var(--ease-smooth) both; }
+    .stagger-1 { animation-delay: 0.10s; }
+    .stagger-2 { animation-delay: 0.22s; }
+    .stagger-3 { animation-delay: 0.34s; }
+    .stagger-4 { animation-delay: 0.48s; }
+    .stagger-5 { animation-delay: 0.62s; }
 
-    /* ── Scroll Reveal ─────────────────────────────────────── */
+    /* ─── Scroll Reveal ──────────────────────────────────────── */
     .reveal {
       transform: translateY(22px);
       transition: transform 0.7s var(--ease-smooth);
@@ -99,59 +115,65 @@
     .reveal-delay-1 { transition-delay: 0.08s; }
     .reveal-delay-2 { transition-delay: 0.18s; }
     .reveal-delay-3 { transition-delay: 0.28s; }
-    .reveal-delay-4 { transition-delay: 0.38s; }
 
-    /* ── Navigation ────────────────────────────────────────── */
+    /* ─── Navigation ─────────────────────────────────────────── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      background: rgba(250, 250, 249, 0.85);
+      background: rgba(250,250,249,0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(0,0,0,0.06);
       transition: all 0.3s var(--ease-snappy);
     }
     nav.scrolled {
-      background: rgba(250, 250, 249, 0.96);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      background: rgba(250,250,249,0.97);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.07);
     }
     .nav-inner {
       max-width: 1200px; margin: 0 auto;
-      padding: 18px 32px;
+      padding: 16px 32px;
       display: flex; justify-content: space-between; align-items: center;
     }
     .nav-logo {
       display: flex; align-items: center; gap: 10px;
       font-family: var(--font-heading);
-      font-weight: 800; font-size: 22px; color: var(--text);
+      font-weight: 800; font-size: 21px; color: var(--text);
     }
-    .nav-logo .logo-paw {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--primary), #6366F1);
-      border-radius: 10px;
+    .nav-logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary) 0%, #6366F1 100%);
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: white;
+      font-size: 18px;
     }
     .nav-links {
-      display: flex; gap: 28px; align-items: center;
+      display: flex; gap: 26px; align-items: center;
     }
     .nav-links a {
-      font-size: 15px; font-weight: 500; color: var(--text-light);
+      font-size: 14px; font-weight: 500; color: var(--text-light);
       transition: color 0.2s;
+      position: relative;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:not(.nav-cta)::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 2px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s var(--ease-snappy);
+    }
+    .nav-links a:not(.nav-cta):hover { color: var(--text); }
+    .nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
     .nav-cta {
       background: var(--accent);
       color: #fff !important;
       padding: 10px 22px;
       border-radius: 8px;
-      font-weight: 600 !important;
+      font-weight: 700 !important;
       font-size: 14px !important;
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s !important;
+      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
     }
     .nav-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(234,88,12,0.30);
-      color: #fff !important;
+      box-shadow: 0 8px 20px rgba(234,88,12,0.32);
     }
     .hamburger {
       display: none; flex-direction: column; gap: 5px;
@@ -160,390 +182,407 @@
     }
     .hamburger span {
       display: block; width: 20px; height: 2px;
-      background: var(--text); border-radius: 2px;
-      transition: all 0.3s;
+      background: var(--text); border-radius: 2px; transition: all 0.3s;
     }
     .mobile-menu {
-      display: none; flex-direction: column; gap: 4px;
-      padding: 12px 24px 20px;
+      display: none; flex-direction: column; gap: 2px;
+      padding: 12px 20px 20px;
       border-top: 1px solid var(--border);
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
-      padding: 12px 8px; font-size: 16px; font-weight: 500;
+      padding: 11px 10px; font-size: 15px; font-weight: 500;
       color: var(--text-light); border-radius: 8px;
       transition: color 0.2s, background 0.2s;
     }
     .mobile-menu a:hover { color: var(--text); background: var(--muted); }
     .mobile-menu .mobile-cta {
-      margin-top: 8px;
-      background: var(--accent); color: #fff;
-      text-align: center; border-radius: 10px; font-weight: 600;
+      margin-top: 8px; background: var(--accent); color: #fff !important;
+      text-align: center; border-radius: 10px; font-weight: 700;
     }
-    .mobile-menu .mobile-cta:hover { background: var(--accent-hover); }
 
-    /* ── Section Labels ─────────────────────────────────────── */
+    /* ─── Section Label ──────────────────────────────────────── */
     .section-label {
       display: inline-block;
-      font-size: 12px; font-weight: 700;
+      font-size: 11.5px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--accent);
-      background: rgba(234,88,12,0.08);
-      padding: 4px 12px; border-radius: 20px;
-      margin-bottom: 14px;
+      color: var(--accent); background: rgba(234,88,12,0.09);
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
     }
 
-    /* ── Buttons ────────────────────────────────────────────── */
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent); color: #fff;
-      padding: 15px 32px; border-radius: 10px;
-      font-weight: 700; font-size: 16px;
-      font-family: var(--font-heading);
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-      border: 2px solid transparent;
-    }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(234,88,12,0.30);
-    }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      color: var(--text); padding: 15px 28px;
-      font-weight: 600; font-size: 16px;
-      font-family: var(--font-heading);
-      transition: color 0.2s;
-    }
-    .btn-secondary:hover { color: var(--accent); }
-    .btn-secondary svg { transition: transform 0.2s var(--ease-spring); }
-    .btn-secondary:hover svg { transform: translateX(4px); }
-
-    /* ── Hero Section ───────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════ */
+    /* 2. HERO — SPLIT LAYOUT 56/44                          */
+    /* ═══════════════════════════════════════════════════════ */
     #hero {
-      padding-top: 120px; padding-bottom: 80px;
-      min-height: 92vh;
+      padding-top: 110px; padding-bottom: 72px;
+      min-height: 96vh;
       display: flex; align-items: center;
       position: relative; overflow: hidden;
     }
-    .hero-bg-orb {
+    .hero-orb {
       position: absolute; border-radius: 50%;
       filter: blur(80px); pointer-events: none; z-index: 0;
     }
-    .hero-bg-orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(37,99,235,0.10), transparent);
-      top: -100px; left: -100px;
+    .hero-orb-1 {
+      width: 650px; height: 650px;
+      background: radial-gradient(circle, rgba(37,99,235,0.09), transparent);
+      top: -120px; left: -120px;
     }
-    .hero-bg-orb-2 {
+    .hero-orb-2 {
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(234,88,12,0.08), transparent);
-      top: 100px; right: -80px;
+      background: radial-gradient(circle, rgba(234,88,12,0.07), transparent);
+      top: 80px; right: -80px;
+    }
+    .hero-orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(99,102,241,0.08), transparent);
+      bottom: -50px; left: 40%;
     }
     .hero-inner {
       max-width: 1200px; margin: 0 auto; padding: 0 32px;
-      display: flex; align-items: center; gap: 56px;
-      position: relative; z-index: 1;
-      width: 100%;
+      display: flex; align-items: center; gap: 52px;
+      position: relative; z-index: 1; width: 100%;
     }
     .hero-text { flex: 0 0 56%; }
     .hero-visual { flex: 0 0 44%; }
-    .hero-eyebrow {
+
+    .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--bg-alt); border: 1px solid var(--border);
-      border-radius: 20px; padding: 6px 14px;
+      background: #fff;
+      border: 1px solid rgba(37,99,235,0.15);
+      border-radius: 24px; padding: 6px 14px 6px 8px;
       font-size: 13px; font-weight: 600; color: var(--primary);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(37,99,235,0.08);
     }
-    .hero-eyebrow .dot {
+    .hero-badge-dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: var(--primary);
+      background: #10B981;
       animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
     .hero-h1 {
-      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-size: clamp(2.5rem, 4.8vw, 4.1rem);
       font-weight: 800; line-height: 1.08;
       letter-spacing: -0.03em; color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
-    .hero-h1 .gradient-text {
-      background: linear-gradient(135deg, var(--primary) 0%, #6366F1 50%, var(--accent) 100%);
+    .gradient-text {
+      background: linear-gradient(130deg, var(--primary) 0%, #6366F1 45%, var(--accent) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .hero-sub {
-      font-size: 18px; line-height: 1.7; color: var(--text-light);
-      max-width: 520px; margin-bottom: 32px;
+      font-size: 17.5px; line-height: 1.72; color: var(--text-light);
+      max-width: 510px; margin-bottom: 34px;
     }
-    .hero-ctas {
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-      margin-bottom: 36px;
+
+    /* Inline email capture form */
+    .hero-form-shell {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 6px;
+      display: flex; gap: 6px;
+      max-width: 470px; margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(37,99,235,0.08);
     }
-    .hero-social-proof {
-      display: flex; align-items: center; gap: 12px;
+    .hero-form-shell:focus-within {
+      border-color: rgba(37,99,235,0.4);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.08), 0 4px 18px rgba(37,99,235,0.10);
+    }
+    .hero-email-input {
+      flex: 1; background: transparent; border: none;
+      padding: 11px 14px; font-size: 15px;
+      color: var(--text); outline: none;
+      font-family: var(--font-body);
+    }
+    .hero-email-input::placeholder { color: var(--text-muted); }
+    .hero-submit-btn {
+      background: var(--accent); color: #fff;
+      padding: 11px 22px; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      font-family: var(--font-heading); cursor: pointer;
+      border: none; white-space: nowrap;
+      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s, background 0.2s;
+    }
+    .hero-submit-btn:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(234,88,12,0.30);
+    }
+    .hero-submit-btn:disabled { opacity: 0.72; cursor: not-allowed; }
+    .hero-form-success {
+      display: none; font-size: 15px; font-weight: 600;
+      color: #059669; padding: 13px 18px;
+      background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.20);
+      border-radius: 11px; max-width: 470px; text-align: center;
+    }
+    .hero-proof {
+      display: flex; align-items: center; gap: 14px;
       font-size: 13px; color: var(--text-muted);
     }
-    .hero-avatars {
-      display: flex;
-    }
+    .hero-avatars { display: flex; }
     .hero-avatars span {
       width: 30px; height: 30px; border-radius: 50%;
       border: 2px solid #fff;
-      background: linear-gradient(135deg, #6366F1, var(--primary));
       display: flex; align-items: center; justify-content: center;
       font-size: 12px; font-weight: 700; color: white;
       margin-left: -8px;
     }
     .hero-avatars span:first-child { margin-left: 0; }
-    .stars { color: #F59E0B; font-size: 14px; letter-spacing: 1px; }
+    .av-1 { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+    .av-2 { background: linear-gradient(135deg, #EC4899, #F43F5E); }
+    .av-3 { background: linear-gradient(135deg, #10B981, #059669); }
+    .av-4 { background: linear-gradient(135deg, #F59E0B, #D97706); }
 
-    /* ── Hero Visual / Mockup ───────────────────────────────── */
-    .hero-mockup-wrap {
-      position: relative;
-    }
+    /* ─── Hero Visual: Mockup ──────────────────────────────── */
+    .hero-visual-wrap { position: relative; }
     .hero-mockup {
       background: #fff;
       border-radius: 20px;
-      box-shadow: 0 30px 80px rgba(15,23,42,0.14), 0 0 0 1px rgba(0,0,0,0.05);
+      box-shadow: 0 32px 80px rgba(15,23,42,0.14), 0 0 0 1px rgba(0,0,0,0.05);
       overflow: hidden;
     }
     .mockup-bar {
-      background: #F8FAFC; padding: 12px 16px;
-      display: flex; align-items: center; gap: 8px;
+      background: #F8FAFC; padding: 11px 15px;
+      display: flex; align-items: center; gap: 7px;
       border-bottom: 1px solid var(--border);
     }
-    .mockup-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-    }
-    .mockup-url {
+    .m-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mockup-url-bar {
       flex: 1; background: #fff; border: 1px solid var(--border);
-      border-radius: 6px; padding: 4px 10px;
+      border-radius: 6px; padding: 3px 10px;
       font-size: 11px; color: var(--text-muted); font-family: monospace;
       text-align: center;
     }
-    .mockup-body { padding: 24px; }
-    .mockup-upload-area {
+    .mockup-body { padding: 20px; }
+
+    /* Upload zone */
+    .upload-zone {
       border: 2px dashed #C7D2FE;
-      border-radius: 14px; padding: 24px;
+      border-radius: 12px; padding: 20px 16px;
       text-align: center; background: #F0F4FF;
-      margin-bottom: 18px;
+      margin-bottom: 16px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
     }
-    .mockup-upload-icon {
-      width: 48px; height: 48px; border-radius: 12px;
+    .upload-zone:hover { border-color: var(--primary); background: #E8EFFE; }
+    .upload-icon {
+      width: 42px; height: 42px; border-radius: 11px;
       background: linear-gradient(135deg, var(--primary), #6366F1);
-      margin: 0 auto 10px;
+      margin: 0 auto 9px;
       display: flex; align-items: center; justify-content: center;
-      color: white;
     }
-    .mockup-upload-icon svg { width: 22px; height: 22px; }
-    .mockup-upload-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .mockup-upload-sub { font-size: 12px; color: var(--text-muted); }
-    .mockup-selects { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .upload-icon svg { width: 20px; height: 20px; }
+    .upload-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .upload-sub { font-size: 11px; color: var(--text-muted); }
+
+    /* Breed/Style selectors */
+    .mockup-selects { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 14px; }
     .mockup-select {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: 9px; padding: 10px 12px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 9px; padding: 9px 11px;
     }
-    .mockup-select-label { font-size: 10px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 4px; }
-    .mockup-select-value { font-size: 13px; font-weight: 600; color: var(--text);
-      display: flex; align-items: center; justify-content: space-between; }
-    .mockup-select-value svg { opacity: 0.4; }
-    .mockup-generate-btn {
+    .sel-label { font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 3px; }
+    .sel-value {
+      font-size: 12.5px; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mockup-gen-btn {
       width: 100%; background: var(--accent); color: white;
-      border-radius: 10px; padding: 13px; font-size: 14px;
+      border-radius: 10px; padding: 12px; font-size: 13.5px;
       font-weight: 700; font-family: var(--font-heading);
-      text-align: center;
-    }
-    .mockup-preview-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-      margin-top: 14px;
-    }
-    .mockup-preview-card {
-      border-radius: 10px; overflow: hidden;
-      aspect-ratio: 1;
-      position: relative;
-    }
-    .mockup-preview-card img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .mockup-preview-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%);
-      display: flex; align-items: flex-end; padding: 6px;
-    }
-    .mockup-preview-label {
-      font-size: 9px; font-weight: 700; color: white;
-      background: rgba(0,0,0,0.4); border-radius: 4px; padding: 2px 5px;
-    }
-    /* Floating badge on mockup */
-    .mockup-badge {
-      position: absolute;
-      background: #fff; border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      padding: 10px 14px;
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12px; font-weight: 600; color: var(--text);
-      white-space: nowrap;
-    }
-    .badge-ready {
-      bottom: -16px; left: -24px;
-    }
-    .badge-ready .badge-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, #10B981, #059669);
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 16px;
-    }
-    .badge-breeds {
-      top: -14px; right: -20px;
-    }
-    .badge-breeds .badge-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, #6366F1, #8B5CF6);
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 16px;
+      text-align: center; margin-bottom: 14px;
     }
 
-    /* ── How It Works ───────────────────────────────────────── */
+    /* Preview grid — 3 colorful portrait cards */
+    .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .preview-card {
+      border-radius: 10px; overflow: hidden;
+      aspect-ratio: 3/4; position: relative;
+    }
+    .preview-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .preview-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.62) 100%);
+      display: flex; align-items: flex-end; padding: 7px;
+    }
+    .preview-label {
+      font-size: 9px; font-weight: 700; color: #fff;
+      background: rgba(0,0,0,0.38); border-radius: 4px;
+      padding: 2px 6px; letter-spacing: 0.04em;
+    }
+
+    /* Floating badge chips */
+    .float-badge {
+      position: absolute;
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+      padding: 10px 14px;
+      display: flex; align-items: center; gap: 9px;
+      font-size: 12px; font-weight: 600; color: var(--text);
+      white-space: nowrap;
+      animation: float 4s ease-in-out infinite;
+    }
+    .float-badge.badge-top {
+      top: -16px; right: -20px;
+      animation-delay: 0s;
+    }
+    .float-badge.badge-bot {
+      bottom: -16px; left: -20px;
+      animation-delay: 2s;
+    }
+    .badge-icon-wrap {
+      width: 30px; height: 30px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; color: white;
+    }
+    .badge-blue { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+    .badge-green { background: linear-gradient(135deg, #10B981, #059669); }
+
+    /* ═══════════════════════════════════════════════════════ */
+    /* 3. HOW IT WORKS — dark background                      */
+    /* ═══════════════════════════════════════════════════════ */
     #how-it-works {
       padding: 80px 32px;
       background: var(--bg-dark);
       position: relative; overflow: hidden;
     }
-    .how-bg-line {
-      position: absolute; top: 50%; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), rgba(234,88,12,0.3), transparent);
-      transform: translateY(-50%);
+    .hiw-bg-glow {
+      position: absolute; border-radius: 50%; filter: blur(100px);
       pointer-events: none;
     }
-    .how-inner {
-      max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;
+    .hiw-glow-1 {
+      width: 500px; height: 500px;
+      background: rgba(99,102,241,0.12);
+      top: -100px; left: -100px;
     }
-    .how-header { text-align: center; margin-bottom: 60px; }
-    .how-header h2 {
+    .hiw-glow-2 {
+      width: 400px; height: 400px;
+      background: rgba(234,88,12,0.08);
+      bottom: -80px; right: -60px;
+    }
+    .hiw-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hiw-header { text-align: center; margin-bottom: 56px; }
+    .hiw-header .section-label { background: rgba(99,102,241,0.15); color: #818CF8; }
+    .hiw-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 800; letter-spacing: -0.03em; color: #fff;
       margin-bottom: 12px;
     }
-    .how-header p { font-size: 17px; color: rgba(255,255,255,0.55); max-width: 480px; margin: 0 auto; }
-    .how-steps {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
-    }
-    .how-step {
+    .hiw-header p { font-size: 16.5px; color: rgba(255,255,255,0.50); max-width: 460px; margin: 0 auto; }
+    .hiw-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .hiw-step {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px; padding: 36px 32px;
+      border-radius: 20px; padding: 36px 30px;
       text-align: center; position: relative;
-      transition: transform 0.3s var(--ease-spring), border-color 0.3s;
+      transition: transform 0.3s var(--ease-spring), border-color 0.3s, background 0.3s;
     }
-    .how-step:hover {
-      transform: translateY(-4px);
-      border-color: rgba(99,102,241,0.3);
+    .hiw-step:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99,102,241,0.30);
+      background: rgba(255,255,255,0.06);
     }
-    .how-step-number {
+    .hiw-num {
       width: 52px; height: 52px; border-radius: 50%;
-      background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(99,102,241,0.2));
-      border: 1px solid rgba(99,102,241,0.3);
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.30);
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 800; color: #818CF8;
+      font-size: 21px; font-weight: 800; color: #818CF8;
       font-family: var(--font-heading);
-      margin: 0 auto 20px;
+      margin: 0 auto 18px;
     }
-    .how-step-icon {
-      font-size: 36px; margin-bottom: 16px;
-    }
-    .how-step h3 {
+    .hiw-emoji { font-size: 38px; margin-bottom: 15px; display: block; }
+    .hiw-step h3 {
       font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px;
     }
-    .how-step p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
-    .how-step-connector {
-      position: absolute; top: 50%; right: -28px;
-      transform: translateY(-50%);
-      color: rgba(99,102,241,0.4); font-size: 24px; z-index: 2;
+    .hiw-step p { font-size: 14px; color: rgba(255,255,255,0.52); line-height: 1.72; }
+
+    /* Connector arrows between steps */
+    .hiw-connector {
+      position: absolute; top: 44px; right: -18px;
+      color: rgba(99,102,241,0.35); font-size: 22px; z-index: 2;
+      display: block;
     }
 
-    /* ── Features / Services ────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════ */
+    /* 4. FEATURES — BENTO GRID                               */
+    /* ═══════════════════════════════════════════════════════ */
     #features {
-      padding: 80px 32px; background: var(--bg);
+      padding: 80px 32px;
+      background: var(--bg);
     }
     .features-inner { max-width: 1200px; margin: 0 auto; }
-    .features-header { margin-bottom: 48px; }
-    .features-header h2 {
+    .features-hdr { margin-bottom: 46px; }
+    .features-hdr h2 {
       font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800; letter-spacing: -0.03em;
-      color: var(--text); margin-bottom: 10px;
+      font-weight: 800; letter-spacing: -0.03em; color: var(--text);
+      margin-bottom: 10px;
     }
-    .features-header p { font-size: 17px; color: var(--text-light); max-width: 520px; }
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto auto;
-      gap: 16px;
-    }
-    .bento-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px; padding: 36px;
+    .features-hdr p { font-size: 16.5px; color: var(--text-light); max-width: 520px; }
+
+    .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .bc {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 32px;
       transition: transform 0.3s var(--ease-spring), box-shadow 0.3s, border-color 0.3s;
     }
-    .bento-card:hover {
+    .bc:hover {
       transform: translateY(-5px);
       box-shadow: 0 16px 40px rgba(37,99,235,0.08);
-      border-color: rgba(37,99,235,0.15);
+      border-color: rgba(37,99,235,0.14);
     }
-    .bento-card.span-2 { grid-column: span 2; }
-    .bento-card.accent-bg {
-      background: linear-gradient(135deg, var(--primary) 0%, #4F46E5 100%);
+    .bc.span2 { grid-column: span 2; }
+    .bc.dark-card {
+      background: linear-gradient(135deg, var(--primary) 0%, #4338CA 100%);
       color: white; border-color: transparent;
     }
-    .bento-card.accent-bg:hover {
+    .bc.dark-card:hover {
       box-shadow: 0 16px 40px rgba(37,99,235,0.25);
       border-color: transparent;
     }
-    .bento-icon {
-      width: 52px; height: 52px; border-radius: 14px;
+    .bc-icon {
+      width: 48px; height: 48px; border-radius: 13px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
-      font-size: 24px;
+      margin-bottom: 18px; font-size: 22px;
     }
-    .bento-icon.blue { background: rgba(37,99,235,0.1); }
-    .bento-icon.orange { background: rgba(234,88,12,0.1); }
-    .bento-icon.purple { background: rgba(99,102,241,0.1); }
-    .bento-icon.green { background: rgba(16,185,129,0.1); }
-    .bento-icon.white-soft { background: rgba(255,255,255,0.15); }
-    .bento-card h3 {
-      font-size: 20px; font-weight: 700; margin-bottom: 8px;
+    .ic-blue   { background: rgba(37,99,235,0.10); }
+    .ic-orange { background: rgba(234,88,12,0.10); }
+    .ic-purple { background: rgba(99,102,241,0.10); }
+    .ic-green  { background: rgba(16,185,129,0.10); }
+    .ic-white  { background: rgba(255,255,255,0.15); }
+    .bc h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .bc p  { font-size: 14px; line-height: 1.72; }
+    .bc:not(.dark-card) h3 { color: var(--text); }
+    .bc:not(.dark-card) p  { color: var(--text-light); }
+    .bc.dark-card h3 { color: rgba(255,255,255,0.95); }
+    .bc.dark-card p  { color: rgba(255,255,255,0.68); }
+
+    .breed-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+    .btag {
+      background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.92);
+      border-radius: 20px; padding: 4px 11px;
+      font-size: 11.5px; font-weight: 600;
     }
-    .bento-card p { font-size: 14px; line-height: 1.7; }
-    .bento-card:not(.accent-bg) h3 { color: var(--text); }
-    .bento-card:not(.accent-bg) p { color: var(--text-light); }
-    .bento-card.accent-bg h3 { color: rgba(255,255,255,0.95); }
-    .bento-card.accent-bg p { color: rgba(255,255,255,0.70); }
-    .breed-tags {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
-    }
-    .breed-tag {
-      background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.90);
-      border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600;
-    }
-    .style-pills {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
-    }
-    .style-pill {
+    .style-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .spill {
       border: 1px solid var(--border); border-radius: 20px;
-      padding: 5px 12px; font-size: 12px; font-weight: 600;
+      padding: 4px 11px; font-size: 11.5px; font-weight: 600;
       color: var(--text-light); background: var(--muted);
+      cursor: pointer; transition: all 0.2s;
     }
-    .style-pill.active {
-      background: rgba(37,99,235,0.08); border-color: rgba(37,99,235,0.2);
+    .spill.active, .spill:hover {
+      background: rgba(37,99,235,0.08);
+      border-color: rgba(37,99,235,0.22);
       color: var(--primary);
     }
 
-    /* ── About / Why Us ─────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════ */
+    /* 5. ABOUT / WHY US                                      */
+    /* ═══════════════════════════════════════════════════════ */
     #about {
       padding: 80px 32px;
       background: var(--bg-alt);
@@ -552,409 +591,364 @@
       max-width: 1200px; margin: 0 auto;
       display: flex; align-items: center; gap: 64px;
     }
-    .about-visual { flex: 0 0 48%; }
-    .about-text { flex: 0 0 52%; }
-    .about-img-wrap {
-      position: relative;
-    }
-    .about-main-img {
+    .about-visual { flex: 0 0 46%; }
+    .about-text   { flex: 0 0 54%; }
+
+    .about-img-wrap { position: relative; }
+    .about-img {
       width: 100%; border-radius: 20px;
       box-shadow: 0 24px 60px rgba(15,23,42,0.12);
       object-fit: cover; aspect-ratio: 4/3;
     }
-    .about-stat-card {
+    .stat-chip {
       position: absolute;
       background: #fff; border-radius: 14px;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-      padding: 14px 18px;
-      min-width: 130px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.11);
+      padding: 13px 18px; min-width: 130px;
     }
-    .about-stat-card.card-1 { bottom: -20px; left: -20px; }
-    .about-stat-card.card-2 { top: -16px; right: -16px; }
-    .about-stat-card .stat-num {
-      font-size: 28px; font-weight: 800; font-family: var(--font-heading);
+    .stat-chip.chip-1 { bottom: -20px; left: -18px; }
+    .stat-chip.chip-2 { top: -14px; right: -18px; }
+    .chip-num {
+      font-size: 26px; font-weight: 800; font-family: var(--font-heading);
       color: var(--text); line-height: 1;
     }
-    .about-stat-card .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .chip-lbl { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+
     .about-text h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
       font-weight: 800; letter-spacing: -0.02em;
       color: var(--text); margin-bottom: 16px; margin-top: 12px;
     }
-    .about-text p {
-      font-size: 16px; color: var(--text-light); line-height: 1.75;
-      margin-bottom: 20px;
+    .about-text > p {
+      font-size: 16px; color: var(--text-light); line-height: 1.77;
+      margin-bottom: 22px;
     }
-    .about-checklist { list-style: none; padding: 0; margin-bottom: 28px; }
-    .about-checklist li {
-      display: flex; align-items: flex-start; gap: 10px;
+    .check-list { list-style: none; padding: 0; margin-bottom: 28px; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 11px;
       font-size: 15px; color: var(--text-light);
-      margin-bottom: 10px; line-height: 1.5;
+      margin-bottom: 11px; line-height: 1.55;
     }
-    .about-checklist li .check-icon {
+    .chk {
       width: 20px; height: 20px; border-radius: 50%;
-      background: rgba(37,99,235,0.1); color: var(--primary);
+      background: rgba(37,99,235,0.09); color: var(--primary);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; margin-top: 1px;
-      font-size: 11px; font-weight: 700;
+      font-size: 10.5px; font-weight: 800;
     }
-    .stats-row {
-      display: flex; gap: 32px; margin-top: 8px; flex-wrap: wrap;
-    }
-    .stat-item .stat-num {
-      font-size: 36px; font-weight: 800; font-family: var(--font-heading);
+    .stat-row { display: flex; gap: 30px; flex-wrap: wrap; }
+    .stat-item .s-num {
+      font-size: 34px; font-weight: 800; font-family: var(--font-heading);
       color: var(--text); line-height: 1;
     }
-    .stat-item .stat-num span { color: var(--accent); }
-    .stat-item .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .stat-item .s-num em { color: var(--accent); font-style: normal; }
+    .stat-item .s-lbl { font-size: 12.5px; color: var(--text-muted); margin-top: 4px; }
 
-    /* ── Testimonials ───────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════ */
+    /* 6. TESTIMONIALS                                        */
+    /* ═══════════════════════════════════════════════════════ */
     #testimonials {
       padding: 80px 32px; background: var(--bg);
     }
-    .testimonials-inner { max-width: 1100px; margin: 0 auto; }
-    .testimonials-header { text-align: center; margin-bottom: 48px; }
-    .testimonials-header h2 {
+    .test-inner { max-width: 1100px; margin: 0 auto; }
+    .test-hdr { text-align: center; margin-bottom: 46px; }
+    .test-hdr h2 {
       font-size: clamp(1.8rem, 4vw, 3rem);
       font-weight: 800; letter-spacing: -0.02em; color: var(--text);
       margin-bottom: 10px;
     }
-    .testimonials-header p { font-size: 17px; color: var(--text-light); }
-    .testimonial-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-    }
-    .testimonial-card {
+    .test-hdr p { font-size: 16.5px; color: var(--text-light); }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .test-card {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 28px;
+      border-radius: 18px; padding: 26px;
       transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
     }
-    .testimonial-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    .test-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.08);
     }
-    .testimonial-card.featured {
+    .test-card.dark {
       background: var(--bg-dark); border-color: transparent;
-      grid-column: span 1;
     }
-    .testimonial-card.featured .stars { color: #FBBF24; }
-    .testimonial-card.featured .quote-text { color: rgba(255,255,255,0.88); }
-    .testimonial-card.featured .author-name { color: #fff; }
-    .testimonial-card.featured .author-role { color: rgba(255,255,255,0.45); }
-    .testimonial-card.featured .author-context { color: rgba(255,255,255,0.35); }
-    .testimonial-stars { display: flex; gap: 3px; margin-bottom: 14px; }
-    .testimonial-stars span { color: #F59E0B; font-size: 15px; }
-    .quote-text {
-      font-size: 15px; line-height: 1.7; color: var(--text-light);
-      margin-bottom: 20px; font-style: italic;
+    .star-row { display: flex; gap: 3px; margin-bottom: 14px; }
+    .star-row span { color: #F59E0B; font-size: 15px; }
+    .test-card.dark .star-row span { color: #FBBF24; }
+    .quote {
+      font-size: 15px; line-height: 1.72; font-style: italic;
+      color: var(--text-light); margin-bottom: 20px;
     }
-    .quote-text strong { font-style: normal; color: var(--text); font-weight: 600; }
-    .author-info { display: flex; align-items: center; gap: 12px; }
-    .author-avatar {
+    .quote strong { font-style: normal; color: var(--text); font-weight: 600; }
+    .test-card.dark .quote { color: rgba(255,255,255,0.78); }
+    .test-card.dark .quote strong { color: #fff; }
+    .author { display: flex; align-items: center; gap: 11px; }
+    .av {
       width: 42px; height: 42px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 16px; color: white; flex-shrink: 0;
     }
-    .author-av-1 { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
-    .author-av-2 { background: linear-gradient(135deg, #EC4899, #F43F5E); }
-    .author-av-3 { background: linear-gradient(135deg, #10B981, #059669); }
-    .author-name { font-size: 14px; font-weight: 700; color: var(--text); }
-    .author-role { font-size: 12px; color: var(--text-muted); }
-    .author-context { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-style: italic; }
+    .a1 { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+    .a2 { background: linear-gradient(135deg, #EC4899, #F43F5E); }
+    .a3 { background: linear-gradient(135deg, #10B981, #059669); }
+    .au-name { font-size: 13.5px; font-weight: 700; color: var(--text); }
+    .au-role { font-size: 11.5px; color: var(--text-muted); }
+    .au-tag  { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; font-style: italic; }
+    .test-card.dark .au-name { color: #fff; }
+    .test-card.dark .au-role { color: rgba(255,255,255,0.42); }
+    .test-card.dark .au-tag  { color: rgba(255,255,255,0.30); }
 
-    /* ── CTA Banner ─────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════ */
+    /* 7. CTA BANNER                                          */
+    /* ═══════════════════════════════════════════════════════ */
     #cta {
       padding: 80px 32px;
       background: var(--bg-alt);
     }
-    .cta-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+    .cta-wrap { max-width: 760px; margin: 0 auto; text-align: center; }
     .cta-card {
-      background: linear-gradient(135deg, var(--bg-dark) 0%, #1E1B4B 100%);
-      border-radius: 28px; padding: 70px 48px;
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+      border-radius: 28px; padding: 68px 48px;
       position: relative; overflow: hidden;
     }
     .cta-orb {
-      position: absolute; border-radius: 50%; filter: blur(60px);
-      pointer-events: none;
+      position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none;
     }
-    .cta-orb-1 {
-      width: 300px; height: 300px;
-      background: rgba(99,102,241,0.25);
+    .cta-o1 {
+      width: 320px; height: 320px;
+      background: rgba(99,102,241,0.22);
       top: -80px; left: -60px;
     }
-    .cta-orb-2 {
-      width: 250px; height: 250px;
-      background: rgba(234,88,12,0.20);
-      bottom: -60px; right: -40px;
+    .cta-o2 {
+      width: 280px; height: 280px;
+      background: rgba(234,88,12,0.18);
+      bottom: -70px; right: -50px;
     }
     .cta-card h2 {
       font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800; letter-spacing: -0.02em;
-      color: #fff; margin-bottom: 14px;
-      position: relative; z-index: 1;
+      font-weight: 800; letter-spacing: -0.02em; color: #fff;
+      margin-bottom: 14px; position: relative; z-index: 1;
     }
-    .cta-card p {
-      font-size: 17px; color: rgba(255,255,255,0.65);
-      max-width: 480px; margin: 0 auto 36px;
-      position: relative; z-index: 1; line-height: 1.6;
+    .cta-card > p {
+      font-size: 16.5px; color: rgba(255,255,255,0.62);
+      max-width: 480px; margin: 0 auto 34px;
+      position: relative; z-index: 1; line-height: 1.65;
     }
-
-    /* ── Waitlist Form ──────────────────────────────────────── */
-    .waitlist-form-wrap {
-      position: relative; z-index: 1;
-      display: flex; justify-content: center;
-    }
+    .cta-form-wrap { position: relative; z-index: 1; display: flex; justify-content: center; }
     #waitlist-form {
-      display: flex; gap: 10px; max-width: 460px; width: 100%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px; padding: 8px;
+      display: flex; gap: 8px; max-width: 460px; width: 100%;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 14px; padding: 7px;
     }
     #waitlist-email {
       flex: 1; background: transparent; border: none;
-      padding: 12px 16px; font-size: 15px;
-      color: #fff; outline: none;
-      font-family: var(--font-body);
+      padding: 11px 15px; font-size: 15px;
+      color: #fff; outline: none; font-family: var(--font-body);
     }
-    #waitlist-email::placeholder { color: rgba(255,255,255,0.45); }
+    #waitlist-email::placeholder { color: rgba(255,255,255,0.42); }
     #waitlist-submit {
       background: var(--accent); color: #fff;
-      padding: 12px 26px; border-radius: 10px;
-      font-size: 15px; font-weight: 700;
+      padding: 11px 24px; border-radius: 10px;
+      font-size: 14.5px; font-weight: 700;
       font-family: var(--font-heading); cursor: pointer;
       border: none; white-space: nowrap;
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s, background 0.2s;
     }
     #waitlist-submit:hover:not(:disabled) {
+      background: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(234,88,12,0.35);
+      box-shadow: 0 8px 20px rgba(234,88,12,0.38);
     }
-    #waitlist-submit:disabled { opacity: 0.75; cursor: not-allowed; }
+    #waitlist-submit:disabled { opacity: 0.72; cursor: not-allowed; }
     .cta-micro {
-      font-size: 13px; color: rgba(255,255,255,0.40);
+      font-size: 12.5px; color: rgba(255,255,255,0.36);
       margin-top: 14px; position: relative; z-index: 1;
     }
     .cta-success-msg {
-      display: none; text-align: center;
-      color: #fff; font-size: 16px; font-weight: 600;
-      position: relative; z-index: 1;
+      display: none; color: #fff; font-size: 16px; font-weight: 600;
+      position: relative; z-index: 1; text-align: center;
     }
-    .cta-success-msg .check-circle {
+    .cta-success-msg .tick {
       width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(16,185,129,0.2); border: 2px solid rgba(16,185,129,0.4);
+      background: rgba(16,185,129,0.20); border: 2px solid rgba(16,185,129,0.38);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 14px; font-size: 24px;
+      margin: 0 auto 14px; font-size: 22px;
     }
 
-    /* ── Hero form (inline version) ────────────────────────── */
-    .hero-form-wrap {
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.8);
-      border-radius: 14px; padding: 6px;
-      display: flex; gap: 8px; max-width: 460px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 20px rgba(37,99,235,0.08);
-    }
-    .hero-email-input {
-      flex: 1; background: transparent; border: none;
-      padding: 12px 14px; font-size: 15px;
-      color: var(--text); outline: none;
-      font-family: var(--font-body);
-    }
-    .hero-email-input::placeholder { color: var(--text-muted); }
-    .hero-submit-btn {
-      background: var(--accent); color: #fff;
-      padding: 12px 22px; border-radius: 10px;
-      font-size: 14px; font-weight: 700;
-      font-family: var(--font-heading); cursor: pointer;
-      border: none; white-space: nowrap;
-      transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
-    }
-    .hero-submit-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(234,88,12,0.30);
-    }
-    .hero-submit-btn:disabled { opacity: 0.75; cursor: not-allowed; }
-    .hero-form-success {
-      display: none; font-size: 15px; font-weight: 600;
-      color: #059669; padding: 12px 20px;
-      background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
-      border-radius: 10px; max-width: 460px; text-align: center;
-    }
-
-    /* ── Contact ─────────────────────────────────────────────── */
-    #contact {
-      padding: 80px 32px; background: var(--bg);
-    }
+    /* ═══════════════════════════════════════════════════════ */
+    /* 8. CONTACT                                             */
+    /* ═══════════════════════════════════════════════════════ */
+    #contact { padding: 80px 32px; background: var(--bg); }
     .contact-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
       align-items: start;
     }
     .contact-info h2 {
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
       font-weight: 800; letter-spacing: -0.02em; color: var(--text);
       margin-bottom: 14px; margin-top: 10px;
     }
-    .contact-info p { font-size: 16px; color: var(--text-light); line-height: 1.75; margin-bottom: 28px; }
-    .contact-details { list-style: none; padding: 0; }
-    .contact-details li {
+    .contact-info > p {
+      font-size: 15.5px; color: var(--text-light); line-height: 1.77; margin-bottom: 28px;
+    }
+    .contact-list { list-style: none; padding: 0; }
+    .contact-list li {
       display: flex; align-items: center; gap: 12px;
       font-size: 14px; color: var(--text-light); margin-bottom: 14px;
     }
-    .contact-details li .ci {
+    .c-icon {
       width: 36px; height: 36px; border-radius: 10px;
       background: rgba(37,99,235,0.08);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .contact-form-card {
+    .contact-form-wrap {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 20px; padding: 36px;
+      border-radius: 20px; padding: 34px;
     }
-    .form-row { margin-bottom: 18px; }
-    .form-label {
-      display: block; font-size: 13px; font-weight: 600;
-      color: var(--text); margin-bottom: 6px;
+    .f-row { margin-bottom: 16px; }
+    .f-label {
+      display: block; font-size: 12.5px; font-weight: 600;
+      color: var(--text); margin-bottom: 5px;
     }
-    .form-input, .form-textarea {
-      width: 100%; padding: 12px 16px;
+    .f-input, .f-textarea {
+      width: 100%; padding: 11px 14px;
       border: 1.5px solid var(--border); border-radius: 10px;
-      font-size: 15px; color: var(--text); font-family: var(--font-body);
+      font-size: 14.5px; color: var(--text); font-family: var(--font-body);
       background: var(--bg); outline: none;
-      transition: border-color 0.2s var(--ease-snappy), box-shadow 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .form-input:focus, .form-textarea:focus {
+    .f-input:focus, .f-textarea:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
     }
-    .form-textarea { resize: vertical; min-height: 110px; }
-    .form-submit {
+    .f-textarea { resize: vertical; min-height: 108px; }
+    .f-submit {
       width: 100%; background: var(--accent); color: #fff;
-      padding: 14px; border-radius: 10px; font-size: 15px;
+      padding: 13px; border-radius: 10px; font-size: 15px;
       font-weight: 700; font-family: var(--font-heading); cursor: pointer;
-      border: none; transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+      border: none; transition: transform 0.2s var(--ease-spring), box-shadow 0.2s, background 0.2s;
     }
-    .form-submit:hover {
+    .f-submit:hover {
+      background: var(--accent-hover);
       transform: translateY(-2px);
       box-shadow: 0 8px 22px rgba(234,88,12,0.28);
     }
 
-    /* ── Footer ─────────────────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════ */
+    /* 9. FOOTER — LAST ELEMENT                               */
+    /* ═══════════════════════════════════════════════════════ */
     footer {
-      background: var(--bg-dark); color: rgba(255,255,255,0.70);
-      padding: 64px 32px 32px;
+      background: var(--bg-dark); color: rgba(255,255,255,0.66);
+      padding: 62px 32px 30px;
     }
-    .footer-inner {
-      max-width: 1200px; margin: 0 auto;
-    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
     .footer-top {
-      display: grid;
-      grid-template-columns: 2.2fr 1fr 1fr 1fr;
+      display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr;
       gap: 48px; margin-bottom: 48px;
     }
-    .footer-brand .f-logo {
+    .f-brand-logo {
       display: flex; align-items: center; gap: 10px;
       font-family: var(--font-heading);
       font-weight: 800; font-size: 20px; color: #fff;
       margin-bottom: 14px;
     }
-    .footer-brand .f-logo .f-paw {
+    .f-logo-icon {
       width: 34px; height: 34px; border-radius: 8px;
       background: linear-gradient(135deg, var(--primary), #6366F1);
       display: flex; align-items: center; justify-content: center;
-      font-size: 16px; color: white;
+      font-size: 16px;
     }
-    .footer-brand p {
-      font-size: 14px; line-height: 1.7;
-      color: rgba(255,255,255,0.45); max-width: 260px; margin-bottom: 20px;
+    .f-brand-desc {
+      font-size: 13.5px; line-height: 1.72;
+      color: rgba(255,255,255,0.42); max-width: 255px; margin-bottom: 20px;
     }
-    .footer-socials { display: flex; gap: 10px; }
-    .footer-social-link {
+    .f-socials { display: flex; gap: 10px; }
+    .f-soc {
       width: 36px; height: 36px; border-radius: 8px;
       background: rgba(255,255,255,0.07);
       display: flex; align-items: center; justify-content: center;
       transition: background 0.2s, transform 0.2s var(--ease-spring);
     }
-    .footer-social-link:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
-    .footer-col h4 {
-      font-size: 12px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: rgba(255,255,255,0.40);
+    .f-soc:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+    .f-col h4 {
+      font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: rgba(255,255,255,0.36);
       margin-bottom: 16px;
     }
-    .footer-col ul { list-style: none; padding: 0; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a {
-      font-size: 14px; color: rgba(255,255,255,0.55);
+    .f-col ul { list-style: none; padding: 0; }
+    .f-col ul li { margin-bottom: 10px; }
+    .f-col ul li a {
+      font-size: 13.5px; color: rgba(255,255,255,0.52);
       transition: color 0.2s;
     }
-    .footer-col ul li a:hover { color: #fff; }
+    .f-col ul li a:hover { color: #fff; }
     .footer-bottom {
       border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 28px;
+      padding-top: 26px;
       display: flex; justify-content: space-between; align-items: center;
       flex-wrap: wrap; gap: 12px;
-      font-size: 13px; color: rgba(255,255,255,0.35);
+      font-size: 12.5px; color: rgba(255,255,255,0.30);
     }
-    .footer-bottom-links { display: flex; gap: 20px; }
-    .footer-bottom-links a { color: rgba(255,255,255,0.35); transition: color 0.2s; }
-    .footer-bottom-links a:hover { color: rgba(255,255,255,0.65); }
+    .f-bottom-links { display: flex; gap: 18px; }
+    .f-bottom-links a { color: rgba(255,255,255,0.30); transition: color 0.2s; }
+    .f-bottom-links a:hover { color: rgba(255,255,255,0.60); }
 
-    /* ── Responsive ─────────────────────────────────────────── */
+    /* ─── Responsive ───────────────────────────────────────── */
     @media (max-width: 1024px) {
-      .hero-inner { gap: 40px; }
+      .hero-inner { gap: 38px; }
       .hero-text { flex: 0 0 54%; }
       .hero-visual { flex: 0 0 46%; }
-      .bento-card.span-2 { grid-column: span 2; }
     }
     @media (max-width: 900px) {
-      .bento-grid { grid-template-columns: 1fr 1fr; }
-      .bento-card.span-2 { grid-column: span 2; }
-      .how-steps { grid-template-columns: 1fr; gap: 20px; }
-      .how-step-connector { display: none; }
-      .testimonial-grid { grid-template-columns: 1fr; }
-      .about-inner { flex-direction: column; gap: 40px; }
-      .about-visual { width: 100%; }
-      .about-stat-card.card-1 { bottom: -10px; left: 10px; }
-      .about-stat-card.card-2 { top: -10px; right: 10px; }
+      .bento { grid-template-columns: 1fr 1fr; }
+      .bc.span2 { grid-column: span 2; }
+      .hiw-steps { grid-template-columns: 1fr; gap: 18px; }
+      .hiw-connector { display: none; }
+      .test-grid { grid-template-columns: 1fr; }
+      .about-inner { flex-direction: column; gap: 42px; }
+      .about-visual, .about-text { flex: 1 1 100%; width: 100%; }
+      .stat-chip.chip-1 { bottom: -10px; left: 10px; }
+      .stat-chip.chip-2 { top: -10px; right: 10px; }
     }
     @media (max-width: 768px) {
-      .nav-inner { padding: 14px 20px; }
+      .nav-inner { padding: 13px 20px; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      #hero { padding-top: 100px; padding-bottom: 60px; min-height: auto; }
-      .hero-inner { flex-direction: column; gap: 40px; padding: 0 20px; }
+      #hero { padding-top: 96px; padding-bottom: 56px; min-height: auto; }
+      .hero-inner { flex-direction: column; gap: 38px; padding: 0 20px; }
       .hero-text, .hero-visual { flex: 1 1 100%; width: 100%; }
-      .hero-h1 { font-size: 2.2rem; }
-      .hero-ctas { flex-direction: column; align-items: flex-start; }
-      .btn-primary { width: 100%; justify-content: center; }
-      .hero-form-wrap { max-width: 100%; }
+      .hero-h1 { font-size: 2.1rem; }
+      .hero-form-shell { max-width: 100%; }
+      .float-badge { display: none; }
       #how-it-works { padding: 60px 20px; }
-      .how-steps { grid-template-columns: 1fr; }
       #features { padding: 60px 20px; }
-      .bento-grid { grid-template-columns: 1fr; }
-      .bento-card.span-2 { grid-column: span 1; }
+      .bento { grid-template-columns: 1fr; }
+      .bc.span2 { grid-column: span 1; }
       #about { padding: 60px 20px; }
       #testimonials { padding: 60px 20px; }
-      .testimonial-grid { grid-template-columns: 1fr; }
+      .test-grid { grid-template-columns: 1fr; }
       #cta { padding: 60px 20px; }
-      .cta-card { padding: 48px 28px; }
-      #waitlist-form { flex-direction: column; gap: 8px; }
+      .cta-card { padding: 48px 26px; }
+      #waitlist-form { flex-direction: column; gap: 8px; border-radius: 12px; }
       #contact { padding: 60px 20px; }
-      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 38px; }
       footer { padding: 48px 20px 28px; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-      .footer-brand { grid-column: span 2; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
+      .f-brand { grid-column: span 2; }
       .footer-bottom { flex-direction: column; text-align: center; }
-      .footer-bottom-links { justify-content: center; }
+      .f-bottom-links { justify-content: center; }
     }
     @media (max-width: 480px) {
-      .hero-h1 { font-size: 1.9rem; }
+      .hero-h1 { font-size: 1.85rem; }
       .footer-top { grid-template-columns: 1fr; }
-      .footer-brand { grid-column: span 1; }
+      .f-brand { grid-column: span 1; }
+      .hero-form-shell { flex-direction: column; gap: 8px; }
+      .hero-submit-btn { width: 100%; text-align: center; justify-content: center; }
     }
 
-    /* ── Reduced Motion ─────────────────────────────────────── */
+    /* ─── Reduced Motion ──────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -966,12 +960,12 @@
 <body>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 1. NAVIGATION                                          -->
+  <!-- 1. NAVIGATION — sticky glassmorphism                   -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <nav id="main-nav">
     <div class="nav-inner">
       <a href="/" class="nav-logo" aria-label="{{COMPANY_NAME}} home">
-        <div class="logo-paw" aria-hidden="true">🐾</div>
+        <div class="nav-logo-icon" aria-hidden="true">🐾</div>
         {{COMPANY_NAME}}
       </a>
       <div class="nav-links">
@@ -982,11 +976,11 @@
         <a href="#contact">Contact</a>
         <a href="#cta" class="nav-cta">Get Early Access</a>
       </div>
-      <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
+      <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
-    <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
       <a href="#how-it-works">How It Works</a>
       <a href="#features">Features</a>
       <a href="#about">About</a>
@@ -997,131 +991,171 @@
   </nav>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 2. HERO — SPLIT LAYOUT                                 -->
+  <!-- 2. HERO — Split: text 56% left, visual 44% right       -->
   <!-- ═══════════════════════════════════════════════════════ -->
-  <section id="hero" aria-label="Hero">
-    <div class="hero-bg-orb hero-bg-orb-1" aria-hidden="true"></div>
-    <div class="hero-bg-orb hero-bg-orb-2" aria-hidden="true"></div>
+  <section id="hero" aria-label="Hero section">
+    <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+
     <div class="hero-inner">
 
-      <!-- Left: Text 56% -->
+      <!-- LEFT: Text column -->
       <div class="hero-text">
-        <div class="hero-eyebrow hero-animate">
-          <span class="dot" aria-hidden="true"></span>
-          AI-Powered Dog Portraits · Launching Soon
+        <div class="hero-badge hero-animate" aria-label="Status: AI-Powered Dog Portraits, Launching Soon">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          AI-Powered Dog Portraits &nbsp;·&nbsp; Launching Soon
         </div>
+
         <h1 class="hero-h1 hero-animate stagger-1">
-          Turn Any Photo Into a
-          <span class="gradient-text"> Stunning Dog Portrait</span>
+          Turn Any Photo Into a<br>
+          <span class="gradient-text">Stunning Dog Portrait</span>
         </h1>
+
         <p class="hero-sub hero-animate stagger-2">
-          Upload a selfie, pick from 50+ breeds and 20+ art styles — from Golden Retriever Renaissance paintings to Husky watercolors. Get 4–6 breathtaking, high-resolution portraits in minutes.
+          Upload a selfie, pick from 50+ dog breeds and 20+ art styles — from Golden Retriever Renaissance paintings to Husky watercolors. Get 4–6 breathtaking, high-resolution portraits in under 3 minutes.
         </p>
 
-        <!-- Email Capture Form -->
+        <!-- Hero Email Capture -->
         <div class="hero-animate stagger-3">
           <form id="hero-form" onsubmit="handleHeroSubmit(event)">
-            <div class="hero-form-wrap">
+            <div class="hero-form-shell">
               <input
                 type="email"
                 id="hero-email"
                 class="hero-email-input"
-                placeholder="Enter your email to get early access"
+                placeholder="Enter your email for early access"
                 required
-                aria-label="Email address"
+                aria-label="Email address for early access"
               />
               <button type="submit" id="hero-submit-btn" class="hero-submit-btn">
                 Get Early Access
               </button>
             </div>
           </form>
-          <div id="hero-form-success" class="hero-form-success" role="status">
+          <div id="hero-form-success" class="hero-form-success" role="status" aria-live="polite">
             ✓ You're on the list! We'll notify you at launch.
           </div>
         </div>
 
-        <div class="hero-social-proof hero-animate stagger-4">
+        <!-- Social proof -->
+        <div class="hero-proof hero-animate stagger-4">
           <div class="hero-avatars" aria-hidden="true">
-            <span>J</span><span>M</span><span>S</span><span>K</span>
+            <span class="av-1">J</span>
+            <span class="av-2">M</span>
+            <span class="av-3">S</span>
+            <span class="av-4">K</span>
           </div>
           <div>
-            <span class="stars">★★★★★</span>
-            <span>&nbsp;Join 800+ dog lovers on the waitlist</span>
+            <span style="color:#F59E0B;font-size:13px;letter-spacing:1px;">★★★★★</span>
+            <span> &nbsp;800+ dog lovers on the waitlist</span>
           </div>
         </div>
       </div>
 
-      <!-- Right: Visual 44% -->
+      <!-- RIGHT: Product Mockup -->
       <div class="hero-visual hero-animate stagger-2">
-        <div class="hero-mockup-wrap">
+        <div class="hero-visual-wrap">
 
-          <!-- Floating badges -->
-          <div class="mockup-badge badge-breeds" aria-hidden="true">
-            <div class="badge-icon">🐕</div>
+          <!-- Floating badge — top right -->
+          <div class="float-badge badge-top" aria-hidden="true">
+            <div class="badge-icon-wrap badge-blue">🐕</div>
             <div>
-              <div style="font-size:13px;font-weight:700;color:var(--text);">50+ Breeds</div>
+              <div style="font-size:12.5px;font-weight:700;color:var(--text);">50+ Breeds</div>
               <div style="font-size:11px;color:var(--text-muted);">& 20+ art styles</div>
             </div>
           </div>
 
           <div class="hero-mockup">
-            <!-- Browser bar -->
+            <!-- Browser chrome -->
             <div class="mockup-bar">
-              <div class="mockup-dot" style="background:#FF5F57;"></div>
-              <div class="mockup-dot" style="background:#FEBC2E;"></div>
-              <div class="mockup-dot" style="background:#28C840;"></div>
-              <div class="mockup-url">dogified.app &nbsp;🔒</div>
+              <div class="m-dot" style="background:#FF5F57;"></div>
+              <div class="m-dot" style="background:#FEBC2E;"></div>
+              <div class="m-dot" style="background:#28C840;"></div>
+              <div class="mockup-url-bar">{{COMPANY_DOMAIN}} &nbsp;🔒</div>
             </div>
-            <!-- App body -->
+
+            <!-- App UI -->
             <div class="mockup-body">
-              <div class="mockup-upload-area">
-                <div class="mockup-upload-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+              <!-- Upload zone -->
+              <div class="upload-zone" aria-label="Upload photo area">
+                <div class="upload-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
                   </svg>
                 </div>
-                <div class="mockup-upload-title">Upload your photo</div>
-                <div class="mockup-upload-sub">Drag & drop or click to browse</div>
+                <div class="upload-title">Upload your photo</div>
+                <div class="upload-sub">Drag & drop or click to browse</div>
               </div>
+
+              <!-- Selectors -->
               <div class="mockup-selects">
                 <div class="mockup-select">
-                  <div class="mockup-select-label">Dog Breed</div>
-                  <div class="mockup-select-value">
+                  <div class="sel-label">Dog Breed</div>
+                  <div class="sel-value">
                     Golden Retriever
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                   </div>
                 </div>
                 <div class="mockup-select">
-                  <div class="mockup-select-label">Art Style</div>
-                  <div class="mockup-select-value">
+                  <div class="sel-label">Art Style</div>
+                  <div class="sel-value">
                     Renaissance
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                   </div>
                 </div>
               </div>
-              <div class="mockup-generate-btn" aria-hidden="true">✨ Generate My Dog Portrait</div>
-              <div class="mockup-preview-grid" aria-label="Sample portrait previews">
-                <!-- Preview cards using colored gradient placeholders -->
-                <div class="mockup-preview-card" style="background:linear-gradient(135deg,#DBEAFE,#C7D2FE);">
-                  <div class="mockup-preview-overlay"><span class="mockup-preview-label">Renaissance</span></div>
+
+              <!-- Generate button -->
+              <div class="mockup-gen-btn" aria-hidden="true">✨ Generate My Dog Portrait</div>
+
+              <!-- Portrait preview grid using real dog photos from Unsplash -->
+              <div class="preview-grid" aria-label="Sample AI-generated dog portraits">
+                <div class="preview-card">
+                  <img
+                    src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300&q=80"
+                    alt="Golden Retriever in Renaissance art style portrait"
+                    loading="lazy"
+                  />
+                  <div class="preview-overlay">
+                    <span class="preview-label">Renaissance</span>
+                  </div>
                 </div>
-                <div class="mockup-preview-card" style="background:linear-gradient(135deg,#FDE68A,#FDBA74);">
-                  <div class="mockup-preview-overlay"><span class="mockup-preview-label">Watercolor</span></div>
+                <div class="preview-card">
+                  <img
+                    src="https://images.unsplash.com/photo-1558788353-f76d92427f16?w=300&q=80"
+                    alt="Husky in watercolor art style portrait"
+                    loading="lazy"
+                  />
+                  <div class="preview-overlay">
+                    <span class="preview-label">Watercolor</span>
+                  </div>
                 </div>
-                <div class="mockup-preview-card" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0);">
-                  <div class="mockup-preview-overlay"><span class="mockup-preview-label">Anime</span></div>
+                <div class="preview-card">
+                  <img
+                    src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=300&q=80"
+                    alt="Corgi in anime art style portrait"
+                    loading="lazy"
+                  />
+                  <div class="preview-overlay">
+                    <span class="preview-label">Anime</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="mockup-badge badge-ready" aria-hidden="true">
-            <div class="badge-icon">✓</div>
+          <!-- Floating badge — bottom left -->
+          <div class="float-badge badge-bot" aria-hidden="true">
+            <div class="badge-icon-wrap badge-green">✓</div>
             <div>
               <div style="font-size:12px;font-weight:700;color:var(--text);">Ready in 3 min</div>
-              <div style="font-size:10px;color:var(--text-muted);">4–6 portraits per run</div>
+              <div style="font-size:10.5px;color:var(--text-muted);">4–6 portraits per run</div>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -1129,148 +1163,157 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 3. HOW IT WORKS (Services)                             -->
+  <!-- 3. HOW IT WORKS — dark bg, 3 steps                    -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="how-it-works" aria-labelledby="hiw-heading">
-    <div class="how-bg-line" aria-hidden="true"></div>
-    <div class="how-inner">
-      <div class="how-header reveal">
+    <div class="hiw-bg-glow hiw-glow-1" aria-hidden="true"></div>
+    <div class="hiw-bg-glow hiw-glow-2" aria-hidden="true"></div>
+    <div class="hiw-inner">
+      <div class="hiw-header reveal">
         <div class="section-label" style="background:rgba(99,102,241,0.15);color:#818CF8;">How It Works</div>
         <h2 id="hiw-heading">Three steps to your dream dog portrait</h2>
         <p>No design skills needed. No waiting days. Just upload, customize, and download.</p>
       </div>
-      <div class="how-steps">
-        <div class="how-step reveal reveal-delay-1">
-          <div class="how-step-number">1</div>
-          <div class="how-step-icon" aria-hidden="true">📸</div>
+      <div class="hiw-steps">
+
+        <div class="hiw-step reveal reveal-delay-1">
+          <div class="hiw-num" aria-hidden="true">1</div>
+          <span class="hiw-emoji" aria-hidden="true">📸</span>
           <h3>Upload Your Photo</h3>
-          <p>Drop in any clear selfie or portrait. Our AI handles the rest — no technical expertise required.</p>
-          <div class="how-step-connector" aria-hidden="true">→</div>
+          <p>Drop in any clear selfie or portrait. Our AI analyzes faces and postures to produce the most lifelike result — no technical expertise needed.</p>
+          <span class="hiw-connector" aria-hidden="true">→</span>
         </div>
-        <div class="how-step reveal reveal-delay-2">
-          <div class="how-step-number">2</div>
-          <div class="how-step-icon" aria-hidden="true">🎨</div>
+
+        <div class="hiw-step reveal reveal-delay-2">
+          <div class="hiw-num" aria-hidden="true">2</div>
+          <span class="hiw-emoji" aria-hidden="true">🎨</span>
           <h3>Choose Your Style</h3>
-          <p>Pick from 50+ dog breeds and 20+ art styles. Renaissance? Watercolor? Studio Ghibli? Your choice.</p>
-          <div class="how-step-connector" aria-hidden="true">→</div>
+          <p>Pick from 50+ dog breeds and 20+ art styles. Renaissance oil painting? Studio Ghibli? Pixel art? Watercolor? Every combination is available.</p>
+          <span class="hiw-connector" aria-hidden="true">→</span>
         </div>
-        <div class="how-step reveal reveal-delay-3">
-          <div class="how-step-number">3</div>
-          <div class="how-step-icon" aria-hidden="true">✨</div>
-          <h3>Download &amp; Share</h3>
-          <p>Receive 4–6 high-resolution portraits in minutes. Print on mugs, frames, or share instantly.</p>
+
+        <div class="hiw-step reveal reveal-delay-3">
+          <div class="hiw-num" aria-hidden="true">3</div>
+          <span class="hiw-emoji" aria-hidden="true">✨</span>
+          <h3>Download &amp; Delight</h3>
+          <p>Receive 4–6 high-resolution portraits in minutes. Print on mugs, frames, canvas — or share instantly to make someone's day.</p>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 4. FEATURES / BENTO GRID                               -->
+  <!-- 4. FEATURES — BENTO GRID (Services section)            -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="features" aria-labelledby="features-heading">
     <div class="features-inner">
-      <div class="features-header reveal">
+      <div class="features-hdr reveal">
         <div class="section-label">What Makes Us Different</div>
-        <h2 id="features-heading">Everything you need for the<br/>perfect dog portrait</h2>
+        <h2 id="features-heading">Everything you need for the<br>perfect dog portrait</h2>
         <p>Built for dog lovers, gift-givers, creators, and brands who want something truly special.</p>
       </div>
 
-      <div class="bento-grid">
-        <!-- Large: Breeds -->
-        <div class="bento-card accent-bg span-2 reveal reveal-delay-1">
-          <div class="bento-icon white-soft" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+      <div class="bento">
+
+        <!-- Large card: Breeds (spans 2 cols) -->
+        <div class="bc dark-card span2 reveal reveal-delay-1">
+          <div class="bc-icon ic-white" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
             </svg>
           </div>
-          <h3>50+ Dog Breeds, All Distinct</h3>
-          <p>From fluffy Pomeranians to regal Dobermans — every breed is uniquely rendered with authentic characteristics. Not a generic dog filter.</p>
-          <div class="breed-tags" aria-label="Sample breeds">
-            <span class="breed-tag">Golden Retriever</span>
-            <span class="breed-tag">Husky</span>
-            <span class="breed-tag">Corgi</span>
-            <span class="breed-tag">Dalmatian</span>
-            <span class="breed-tag">Poodle</span>
-            <span class="breed-tag">Border Collie</span>
-            <span class="breed-tag">+44 more</span>
+          <h3>50+ Dog Breeds — All Uniquely Rendered</h3>
+          <p>From fluffy Pomeranians to regal Dobermans, every breed is rendered with authentic characteristics — not a generic dog filter slapped on a selfie.</p>
+          <div class="breed-tags" aria-label="Available dog breeds (sample)">
+            <span class="btag">Golden Retriever</span>
+            <span class="btag">Husky</span>
+            <span class="btag">Corgi</span>
+            <span class="btag">Dalmatian</span>
+            <span class="btag">Poodle</span>
+            <span class="btag">Border Collie</span>
+            <span class="btag">German Shepherd</span>
+            <span class="btag">+43 more</span>
           </div>
         </div>
 
-        <!-- Small: Speed -->
-        <div class="bento-card reveal reveal-delay-2">
-          <div class="bento-icon blue" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Small card: Speed -->
+        <div class="bc reveal reveal-delay-2">
+          <div class="bc-icon ic-blue" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
           </div>
           <h3>3-Minute Delivery</h3>
-          <p>No queues. No waiting overnight. Your portraits are ready in minutes, not hours — powered by state-of-the-art AI.</p>
+          <p>No queues. No overnight waits. Powered by state-of-the-art AI inference — your portraits are ready while your coffee's still hot.</p>
         </div>
 
-        <!-- Small: Styles -->
-        <div class="bento-card reveal reveal-delay-1">
-          <div class="bento-icon purple" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Small card: Art Styles -->
+        <div class="bc reveal reveal-delay-1">
+          <div class="bc-icon ic-purple" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
           </div>
-          <h3>20+ Art Styles</h3>
-          <p>Renaissance oil painting, watercolor, anime, pixel art, Studio Ghibli, and more. Every style is production-quality.</p>
-          <div class="style-pills" aria-label="Sample art styles">
-            <span class="style-pill active">Renaissance</span>
-            <span class="style-pill">Watercolor</span>
-            <span class="style-pill">Anime</span>
-            <span class="style-pill">Pixel Art</span>
-            <span class="style-pill">Ghibli</span>
+          <h3>20+ Premium Art Styles</h3>
+          <p>Renaissance oil painting, watercolor, anime, pixel art, Studio Ghibli, and more — each style is tuned on museum-quality reference art.</p>
+          <div class="style-pills" aria-label="Available art styles (sample)">
+            <span class="spill active">Renaissance</span>
+            <span class="spill">Watercolor</span>
+            <span class="spill">Anime</span>
+            <span class="spill">Pixel Art</span>
+            <span class="spill">Ghibli</span>
           </div>
         </div>
 
-        <!-- Small: High-res -->
-        <div class="bento-card reveal reveal-delay-2">
-          <div class="bento-icon orange" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>
+        <!-- Small card: Resolution -->
+        <div class="bc reveal reveal-delay-2">
+          <div class="bc-icon ic-orange" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
             </svg>
           </div>
           <h3>Print-Ready Resolution</h3>
-          <p>Every portrait exports at high resolution — perfect for canvas prints, phone cases, mugs, and gift merch.</p>
+          <p>Every portrait exports at high resolution — perfect for canvas prints, phone cases, mugs, gift merch, and wall art.</p>
         </div>
 
-        <!-- Large: Use cases -->
-        <div class="bento-card span-2 reveal reveal-delay-3">
-          <div class="bento-icon green" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Large card: Use cases (spans 2 cols) -->
+        <div class="bc span2 reveal reveal-delay-3" style="background:linear-gradient(135deg,#FFF5F0,#FFFBFA);">
+          <div class="bc-icon ic-green" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
             </svg>
           </div>
-          <h3>Made for Every Dog Lover's Dream</h3>
-          <p>Whether it's a birthday gift, a social media post, custom merchandise, or brand marketing — {{COMPANY_NAME}} portraits are made to make people smile. The world's most personalized dog art, created in minutes.</p>
+          <h3 style="color:var(--text);">Made for Every Dog Lover's Dream</h3>
+          <p style="color:var(--text-light);">Whether it's a birthday gift, a social media post, custom merchandise, or brand marketing — {{COMPANY_NAME}} portraits are made to make people smile. The world's most personalized dog art, created in minutes. Order prints, phone cases, or mugs directly from the platform.</p>
         </div>
+
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 5. ABOUT / WHY US                                       -->
+  <!-- 5. ABOUT / WHY US — split layout with real dog image   -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="about" aria-labelledby="about-heading">
     <div class="about-inner">
-      <!-- Visual side -->
+
+      <!-- Visual: image with floating stat chips -->
       <div class="about-visual reveal">
         <div class="about-img-wrap">
           <img
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80"
-            alt="Dogified AI technology powering dog portrait generation"
-            class="about-main-img"
+            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=900&q=80"
+            alt="Beautiful Golden Retriever dog — example of the breed portraits {{COMPANY_NAME}} creates"
+            class="about-img"
             loading="lazy"
           />
-          <div class="about-stat-card card-1">
-            <div class="stat-num">4–6</div>
-            <div class="stat-label">Portraits per generation</div>
+          <div class="stat-chip chip-1">
+            <div class="chip-num">4–6</div>
+            <div class="chip-lbl">Portraits per generation</div>
           </div>
-          <div class="about-stat-card card-2">
-            <div class="stat-num" style="color:var(--accent);">3 min</div>
-            <div class="stat-label">Average generation time</div>
+          <div class="stat-chip chip-2">
+            <div class="chip-num" style="color:var(--accent);">3 min</div>
+            <div class="chip-lbl">Average generation time</div>
           </div>
         </div>
       </div>
@@ -1278,27 +1321,44 @@
       <!-- Text side -->
       <div class="about-text reveal reveal-delay-2">
         <div class="section-label">Why {{COMPANY_NAME}}</div>
-        <h2 id="about-heading">Dog art that's actually yours — not a generic filter</h2>
-        <p>Generic dog apps slap a snout on your selfie. {{COMPANY_NAME}} uses advanced AI image generation trained specifically on dog breeds and fine art styles to create portraits that look like they belong in a gallery — or on your living room wall.</p>
-        <ul class="about-checklist">
-          <li><span class="check-icon" aria-hidden="true">✓</span>AI trained on thousands of breed-specific reference images for authentic results</li>
-          <li><span class="check-icon" aria-hidden="true">✓</span>Fine-tuned on museum-quality artworks for each style category</li>
-          <li><span class="check-icon" aria-hidden="true">✓</span>Context customization: add backgrounds, costumes, and props</li>
-          <li><span class="check-icon" aria-hidden="true">✓</span>Commercial licensing for brand and merchandise use</li>
-          <li><span class="check-icon" aria-hidden="true">✓</span>Integrated print-on-demand partners for instant merch ordering</li>
+        <h2 id="about-heading">Dog art that's genuinely yours — not a generic filter</h2>
+        <p>Generic dog apps slap a cartoon snout on your selfie. {{COMPANY_NAME}} uses advanced AI trained on thousands of breed-specific reference images and museum-quality fine art styles — creating portraits that look like they belong on your living room wall or in a gallery show.</p>
+
+        <ul class="check-list" aria-label="Key differentiators">
+          <li>
+            <span class="chk" aria-hidden="true">✓</span>
+            AI trained on thousands of breed-specific reference images for authentic, lifelike results
+          </li>
+          <li>
+            <span class="chk" aria-hidden="true">✓</span>
+            Fine-tuned on museum-quality artworks across every style category
+          </li>
+          <li>
+            <span class="chk" aria-hidden="true">✓</span>
+            Context customization: add backgrounds, costumes, seasonal props
+          </li>
+          <li>
+            <span class="chk" aria-hidden="true">✓</span>
+            Commercial licensing available for brand and merchandise use
+          </li>
+          <li>
+            <span class="chk" aria-hidden="true">✓</span>
+            Integrated print-on-demand — order merch directly from the platform
+          </li>
         </ul>
-        <div class="stats-row">
+
+        <div class="stat-row">
           <div class="stat-item">
-            <div class="stat-num">50<span>+</span></div>
-            <div class="stat-label">Dog breeds</div>
+            <div class="s-num">50<em>+</em></div>
+            <div class="s-lbl">Dog breeds</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">20<span>+</span></div>
-            <div class="stat-label">Art styles</div>
+            <div class="s-num">20<em>+</em></div>
+            <div class="s-lbl">Art styles</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">800<span>+</span></div>
-            <div class="stat-label">Waitlist members</div>
+            <div class="s-num">800<em>+</em></div>
+            <div class="s-lbl">Waitlist members</div>
           </div>
         </div>
       </div>
@@ -1306,67 +1366,68 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 6. TESTIMONIALS                                         -->
+  <!-- 6. TESTIMONIALS — 3 cards with star ratings            -->
   <!-- ═══════════════════════════════════════════════════════ -->
-  <section id="testimonials" aria-labelledby="testimonials-heading">
-    <div class="testimonials-inner">
-      <div class="testimonials-header reveal">
+  <section id="testimonials" aria-labelledby="test-heading">
+    <div class="test-inner">
+      <div class="test-hdr reveal">
         <div class="section-label">Early Feedback</div>
-        <h2 id="testimonials-heading">Dog lovers are already obsessed</h2>
+        <h2 id="test-heading">Dog lovers are already obsessed</h2>
         <p>Early access members share their first impressions of {{COMPANY_NAME}}.</p>
       </div>
-      <div class="testimonial-grid">
 
-        <!-- Card 1 -->
-        <article class="testimonial-card reveal reveal-delay-1">
-          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+      <div class="test-grid">
+
+        <!-- Testimonial 1 -->
+        <article class="test-card reveal reveal-delay-1">
+          <div class="star-row" aria-label="5 out of 5 stars">
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
-          <p class="quote-text">
-            "I ordered a <strong>Renaissance Golden Retriever portrait</strong> for my mom's birthday and she literally cried. Dogified turned a normal selfie into something that looked like it belonged in the Louvre — with a dog. Absolute magic."
+          <p class="quote">
+            "I ordered a <strong>Renaissance Golden Retriever portrait</strong> for my mom's birthday and she literally cried. {{COMPANY_NAME}} turned a normal selfie into something that looked like it belonged in the Louvre — with a dog. Absolute magic."
           </p>
-          <div class="author-info">
-            <div class="author-avatar author-av-1" aria-hidden="true">J</div>
+          <div class="author">
+            <div class="av a1" aria-hidden="true">J</div>
             <div>
-              <div class="author-name">Jamie L.</div>
-              <div class="author-role">Dog Mom, San Francisco</div>
-              <div class="author-context">Early Access · Birthday Gift Use</div>
+              <div class="au-name">Jamie L.</div>
+              <div class="au-role">Dog Mom, San Francisco</div>
+              <div class="au-tag">Early Access · Birthday Gift</div>
             </div>
           </div>
         </article>
 
-        <!-- Card 2 (featured) -->
-        <article class="testimonial-card featured reveal reveal-delay-2">
-          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+        <!-- Testimonial 2 — featured dark -->
+        <article class="test-card dark reveal reveal-delay-2">
+          <div class="star-row" aria-label="5 out of 5 stars">
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
-          <p class="quote-text" style="color:rgba(255,255,255,0.80);">
-            "We used {{COMPANY_NAME}} for our dog brand's social media content. The <strong>watercolor Corgi illustrations</strong> got 3x our usual engagement — people couldn't believe they were AI-generated. Already planning our next campaign with it."
+          <p class="quote">
+            "We used {{COMPANY_NAME}} for our dog brand's social media content. The <strong>watercolor Corgi illustrations</strong> got 3× our usual engagement — people couldn't believe they were AI-generated. Already planning our next campaign."
           </p>
-          <div class="author-info">
-            <div class="author-avatar author-av-2" aria-hidden="true">M</div>
+          <div class="author">
+            <div class="av a2" aria-hidden="true">M</div>
             <div>
-              <div class="author-name">Maya R.</div>
-              <div class="author-role">Brand Manager, PawCo</div>
-              <div class="author-context">Early Access · Brand Marketing Use</div>
+              <div class="au-name">Maya R.</div>
+              <div class="au-role">Brand Manager, PawCo</div>
+              <div class="au-tag">Early Access · Brand Marketing</div>
             </div>
           </div>
         </article>
 
-        <!-- Card 3 -->
-        <article class="testimonial-card reveal reveal-delay-3">
-          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+        <!-- Testimonial 3 -->
+        <article class="test-card reveal reveal-delay-3">
+          <div class="star-row" aria-label="5 out of 5 stars">
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
-          <p class="quote-text">
-            "The <strong>anime-style Husky portrait</strong> of my dog Koda is my new phone wallpaper, profile picture, and desktop background. I've already convinced six friends to join the waitlist. This is the app the internet needed."
+          <p class="quote">
+            "The <strong>anime-style Husky portrait</strong> of my dog Koda is my new phone wallpaper, profile picture, and desktop background. I've convinced six friends to join the waitlist. This is the app the internet needed."
           </p>
-          <div class="author-info">
-            <div class="author-avatar author-av-3" aria-hidden="true">S</div>
+          <div class="author">
+            <div class="av a3" aria-hidden="true">S</div>
             <div>
-              <div class="author-name">Sam K.</div>
-              <div class="author-role">Illustrator &amp; Dog Enthusiast</div>
-              <div class="author-context">Early Access · Social Media Use</div>
+              <div class="au-name">Sam K.</div>
+              <div class="au-role">Illustrator &amp; Dog Enthusiast</div>
+              <div class="au-tag">Early Access · Social Media</div>
             </div>
           </div>
         </article>
@@ -1376,131 +1437,146 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 7. CTA BANNER                                           -->
+  <!-- 7. CTA BANNER — full-width dark bg with waitlist form  -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="cta" aria-labelledby="cta-heading">
-    <div class="cta-inner">
+    <div class="cta-wrap">
       <div class="cta-card reveal">
-        <div class="cta-orb cta-orb-1" aria-hidden="true"></div>
-        <div class="cta-orb cta-orb-2" aria-hidden="true"></div>
-        <div class="section-label" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.80);margin-bottom:16px;">
+        <div class="cta-orb cta-o1" aria-hidden="true"></div>
+        <div class="cta-orb cta-o2" aria-hidden="true"></div>
+
+        <div class="section-label" style="background:rgba(255,255,255,0.10);color:rgba(255,255,255,0.75);">
           Limited Early Access
         </div>
         <h2 id="cta-heading">Your dog deserves to be a Renaissance masterpiece</h2>
-        <p>Join the waitlist today and be the first to transform your photos when we launch. Early members get exclusive discounts and first-generation credits.</p>
-        <div class="waitlist-form-wrap">
+        <p>Join the waitlist and be first to transform your photos when we launch. Early members get exclusive discounts and first-generation credits.</p>
+
+        <div class="cta-form-wrap">
           <form id="waitlist-form" onsubmit="handleWaitlistSubmit(event)">
             <input
               type="email"
               id="waitlist-email"
               placeholder="Your email address"
               required
-              aria-label="Email for waitlist"
+              aria-label="Email address for waitlist"
             />
             <button type="submit" id="waitlist-submit">Join the Waitlist →</button>
           </form>
         </div>
-        <div id="cta-success" class="cta-success-msg" role="status">
-          <div class="check-circle" aria-hidden="true">✓</div>
+
+        <div id="cta-success" class="cta-success-msg" role="status" aria-live="polite">
+          <div class="tick" aria-hidden="true">✓</div>
           <p>You're in! We'll be in touch at launch.</p>
-          <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:6px;">Watch your inbox — early members get exclusive perks.</p>
+          <p style="font-size:14px;color:rgba(255,255,255,0.48);margin-top:7px;">
+            Watch your inbox — early members get exclusive perks.
+          </p>
         </div>
-        <p class="cta-micro">No spam, ever. Unsubscribe anytime. We launch soon.</p>
+
+        <p class="cta-micro">No spam, ever. Unsubscribe anytime. We launch very soon.</p>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 8. CONTACT                                              -->
+  <!-- 8. CONTACT — form + info side by side                  -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="contact" aria-labelledby="contact-heading">
     <div class="contact-inner">
+
       <!-- Info side -->
       <div class="contact-info reveal">
         <div class="section-label">Get in Touch</div>
         <h2 id="contact-heading">Questions? We'd love to hear from you.</h2>
         <p>Whether you're a dog lover, a brand, or a creator — we're building {{COMPANY_NAME}} for you. Reach out and let's talk portraits.</p>
-        <ul class="contact-details" aria-label="Contact information">
+        <ul class="contact-list" aria-label="Contact details">
           <li>
-            <div class="ci" aria-hidden="true">
+            <div class="c-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
               </svg>
             </div>
-            <a href="mailto:{{COMPANY_EMAIL}}">{{COMPANY_EMAIL}}</a>
+            <a href="mailto:{{COMPANY_EMAIL}}" style="color:var(--primary);font-weight:600;">{{COMPANY_EMAIL}}</a>
           </li>
           <li>
-            <div class="ci" aria-hidden="true">
+            <div class="c-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
               </svg>
             </div>
-            <span>Typically reply within 24 hours</span>
+            Typically reply within 24 hours
           </li>
           <li>
-            <div class="ci" aria-hidden="true">
+            <div class="c-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
               </svg>
             </div>
-            <span>Building remotely, shipping globally</span>
+            Building remotely, shipping globally
           </li>
         </ul>
       </div>
 
       <!-- Form side -->
       <div class="reveal reveal-delay-2">
-        <div class="contact-form-card">
+        <div class="contact-form-wrap">
           <form id="contact-form" onsubmit="handleContactSubmit(event)">
-            <div class="form-row">
-              <label class="form-label" for="contact-name">Your Name</label>
-              <input type="text" id="contact-name" class="form-input" placeholder="Alex Smith" required />
+            <div class="f-row">
+              <label class="f-label" for="c-name">Your Name</label>
+              <input type="text" id="c-name" class="f-input" placeholder="Alex Smith" required />
             </div>
-            <div class="form-row">
-              <label class="form-label" for="contact-email">Email Address</label>
-              <input type="email" id="contact-email" class="form-input" placeholder="alex@email.com" required />
+            <div class="f-row">
+              <label class="f-label" for="c-email">Email Address</label>
+              <input type="email" id="c-email" class="f-input" placeholder="alex@email.com" required />
             </div>
-            <div class="form-row">
-              <label class="form-label" for="contact-message">Message</label>
-              <textarea id="contact-message" class="form-textarea" placeholder="Tell us about your idea, question, or collaboration..." required></textarea>
+            <div class="f-row">
+              <label class="f-label" for="c-msg">Message</label>
+              <textarea id="c-msg" class="f-textarea" placeholder="Tell us about your idea, question, or collaboration..." required></textarea>
             </div>
-            <button type="submit" id="contact-submit" class="form-submit">Send Message</button>
+            <button type="submit" id="c-submit" class="f-submit">Send Message</button>
           </form>
-          <p id="contact-success" style="display:none;color:#059669;font-size:14px;margin-top:12px;font-weight:600;">✓ Message sent! We'll be in touch soon.</p>
+          <p id="c-success" style="display:none;color:#059669;font-size:14px;margin-top:12px;font-weight:600;">
+            ✓ Message sent! We'll be in touch soon.
+          </p>
         </div>
       </div>
+
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- 9. FOOTER — LAST ELEMENT                                -->
+  <!-- 9. FOOTER — dark bg, 4-column, LAST ELEMENT            -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <footer aria-label="Site footer">
     <div class="footer-inner">
       <div class="footer-top">
-        <!-- Brand -->
-        <div class="footer-brand">
-          <div class="f-logo">
-            <div class="f-paw" aria-hidden="true">🐾</div>
+
+        <!-- Brand column -->
+        <div class="f-brand">
+          <div class="f-brand-logo">
+            <div class="f-logo-icon" aria-hidden="true">🐾</div>
             {{COMPANY_NAME}}
           </div>
-          <p>AI-powered dog portraits that transform your photos into stunning breed illustrations across 50+ dog breeds and 20+ art styles.</p>
-          <div class="footer-socials" aria-label="Social media links">
-            <!-- Twitter/X -->
-            <a href="#" class="footer-social-link" aria-label="Follow us on X (Twitter)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <p class="f-brand-desc">
+            AI-powered dog portraits that transform your photos into stunning breed illustrations across 50+ dog breeds and 20+ art styles.
+          </p>
+          <div class="f-socials" aria-label="Social media links">
+            <a href="#" class="f-soc" aria-label="Follow {{COMPANY_NAME}} on X (Twitter)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
               </svg>
             </a>
-            <!-- Instagram -->
-            <a href="#" class="footer-social-link" aria-label="Follow us on Instagram">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            <a href="#" class="f-soc" aria-label="Follow {{COMPANY_NAME}} on Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.58)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
               </svg>
             </a>
-            <!-- TikTok -->
-            <a href="#" class="footer-social-link" aria-label="Follow us on TikTok">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)">
+            <a href="#" class="f-soc" aria-label="Follow {{COMPANY_NAME}} on TikTok">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.58)">
                 <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.73z"/>
               </svg>
             </a>
@@ -1508,7 +1584,7 @@
         </div>
 
         <!-- Product column -->
-        <div class="footer-col">
+        <div class="f-col">
           <h4>Product</h4>
           <ul>
             <li><a href="#how-it-works">How It Works</a></li>
@@ -1519,7 +1595,7 @@
         </div>
 
         <!-- Use Cases column -->
-        <div class="footer-col">
+        <div class="f-col">
           <h4>Use Cases</h4>
           <ul>
             <li><a href="#cta">Personal Portraits</a></li>
@@ -1530,7 +1606,7 @@
         </div>
 
         <!-- Company column -->
-        <div class="footer-col">
+        <div class="f-col">
           <h4>Company</h4>
           <ul>
             <li><a href="#about">About Us</a></li>
@@ -1539,12 +1615,13 @@
             <li><a href="mailto:{{COMPANY_EMAIL}}">Support</a></li>
           </ul>
         </div>
+
       </div>
 
       <!-- Bottom bar -->
       <div class="footer-bottom">
         <p>© 2026 {{COMPANY_NAME}}. All rights reserved.</p>
-        <div class="footer-bottom-links">
+        <div class="f-bottom-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
           <a href="#">Cookie Policy</a>
@@ -1557,35 +1634,38 @@
   <!-- SCRIPTS                                                 -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <script>
-    // ── Sticky nav on scroll ──────────────────────────────
-    const nav = document.getElementById('main-nav');
+    // ── Sticky nav on scroll ───────────────────────────────
+    const mainNav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
+      mainNav.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
 
-    // ── Mobile hamburger ──────────────────────────────────
-    const hamburger = document.getElementById('hamburger-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
+    // ── Mobile hamburger toggle ────────────────────────────
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu   = document.getElementById('mobile-menu');
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburgerBtn.setAttribute('aria-expanded', isOpen);
     });
-    // Close on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
     });
 
-    // ── Scroll reveal ─────────────────────────────────────
-    const revealObserver = new IntersectionObserver((entries) => {
+    // ── Scroll reveal (IntersectionObserver) ───────────────
+    const revealObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
+          revealObs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }, { threshold: 0.06, rootMargin: '0px 0px -16px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-    // ── Lead API helper ───────────────────────────────────
+    // ── Lead collection API ────────────────────────────────
     async function submitLead(email, sourcePage) {
       try {
         const res = await fetch('/api/leads/collect', {
@@ -1600,58 +1680,52 @@
       }
     }
 
-    // ── Hero form submit ──────────────────────────────────
+    // ── Hero form ──────────────────────────────────────────
     async function handleHeroSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('hero-email').value;
-      const btn = document.getElementById('hero-submit-btn');
+      const email = document.getElementById('hero-email').value.trim();
+      const btn   = document.getElementById('hero-submit-btn');
       btn.textContent = 'Joining...';
       btn.disabled = true;
       const ok = await submitLead(email, 'home-hero');
-      const form = document.getElementById('hero-form');
-      const success = document.getElementById('hero-form-success');
       if (ok) {
-        form.style.display = 'none';
-        success.style.display = 'block';
+        document.getElementById('hero-form').style.display = 'none';
+        document.getElementById('hero-form-success').style.display = 'block';
       } else {
         btn.textContent = 'Try Again';
         btn.disabled = false;
       }
     }
 
-    // ── CTA waitlist form submit ──────────────────────────
+    // ── CTA waitlist form ──────────────────────────────────
     async function handleWaitlistSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('waitlist-email').value;
-      const btn = document.getElementById('waitlist-submit');
+      const email = document.getElementById('waitlist-email').value.trim();
+      const btn   = document.getElementById('waitlist-submit');
       btn.textContent = 'Joining...';
       btn.disabled = true;
       const ok = await submitLead(email, 'home-cta');
-      const form = document.getElementById('waitlist-form');
-      const success = document.getElementById('cta-success');
-      const micro = document.querySelector('.cta-micro');
       if (ok) {
-        form.style.display = 'none';
-        if (micro) micro.style.display = 'none';
-        success.style.display = 'block';
+        document.getElementById('waitlist-form').style.display = 'none';
+        document.querySelector('.cta-micro').style.display = 'none';
+        document.getElementById('cta-success').style.display = 'block';
       } else {
         btn.textContent = 'Try Again →';
         btn.disabled = false;
       }
     }
 
-    // ── Contact form submit ───────────────────────────────
+    // ── Contact form ───────────────────────────────────────
     async function handleContactSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('contact-email').value;
-      const btn = document.getElementById('contact-submit');
+      const email = document.getElementById('c-email').value.trim();
+      const btn   = document.getElementById('c-submit');
       btn.textContent = 'Sending...';
       btn.disabled = true;
       const ok = await submitLead(email, 'home-contact');
-      const successMsg = document.getElementById('contact-success');
       if (ok) {
-        successMsg.style.display = 'block';
-        btn.textContent = 'Sent!';
+        document.getElementById('c-success').style.display = 'block';
+        btn.textContent = 'Sent ✓';
         btn.style.background = '#10B981';
       } else {
         btn.textContent = 'Try Again';
@@ -1659,10 +1733,10 @@
       }
     }
 
-    // ── Active breed/style pill toggle (mockup demo) ──────
-    document.querySelectorAll('.style-pill').forEach(pill => {
+    // ── Style pill toggle (interactive demo) ──────────────
+    document.querySelectorAll('.spill').forEach(pill => {
       pill.addEventListener('click', () => {
-        document.querySelectorAll('.style-pill').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.spill').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
       });
     });
